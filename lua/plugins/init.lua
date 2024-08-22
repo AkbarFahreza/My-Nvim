@@ -3,6 +3,15 @@ return {
     "stevearc/conform.nvim",
     opts = require "configs.conform",
   },
+  { "mfussenegger/nvim-dap" },
+
+  {
+    "akinsho/flutter-tools.nvim",
+    dependencies = "nvim-lua/plenary.nvim",
+    config = function()
+      require "plugins.flutter-tools"
+    end,
+  },
   {
     "neovim/nvim-lspconfig",
     config = function()
@@ -23,8 +32,6 @@ return {
           "javascript",
           "typescript",
           "tsx",
-          "svelte",
-          "go",
           "json",
         },
         sync_install = false,

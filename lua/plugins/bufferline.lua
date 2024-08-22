@@ -1,12 +1,21 @@
-
 return {
-	"akinsho/bufferline.nvim",
-	version = "*",
-	dependencies = "nvim-tree/nvim-web-devicons",
-	config = function()
-		require("bufferline").setup({})
-		vim.keymap.set("n", "<tab>", ":BufferLineCycleNext<cr>", { noremap = true, silent = true })
-		vim.keymap.set("n", "<s-tab>", ":BufferLineCyclePrev<cr>", { noremap = true, silent = true })
-		vim.keymap.set("n", "<leader>x", ":bdelete!<cr>", { noremap = true, silent = true })
-	end,
+  "akinsho/bufferline.nvim",
+  config = function()
+    require("bufferline").setup({
+      options = {
+        numbers = "ordinal",  -- You can change this to "both" or "buffer_id"
+        show_buffer_close_icons = false,
+        show_close_icon = false,
+        separator_style = "slant",
+        offsets = {
+          {
+            filetype = "NvimTree",
+            text = "File Explorer",
+            text_align = "center",
+            padding = 2,
+          },
+        },
+      },
+    })
+  end,
 }

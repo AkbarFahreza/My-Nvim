@@ -1,11 +1,12 @@
 return {
-    "Exafunction/codeium.nvim",
-    dependencies = {
-        "nvim-lua/plenary.nvim",
-        "hrsh7th/nvim-cmp",
-    },
+  {
+    "Exafunction/codeium.vim",
     config = function()
-        require("codeium").setup({
-        })
-    end
+      -- Optional: Customize the key bindings for Codeium
+      -- This example sets <Tab> to accept the suggestion and <Ctrl-e> to cycle through suggestions
+      vim.keymap.set('i', '<A-a>', function() return vim.fn['codeium#Accept']() end, { expr = true })
+      vim.keymap.set('i', '<C-e>', function() return vim.fn end, { expr = true })
+      vim.keymap.set('i', '<C-d>', function() return vim.fn['codeium#CycleCompletions'](-1) end, { expr = true })
+    end,
+  }
 }
