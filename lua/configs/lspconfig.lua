@@ -4,7 +4,7 @@ require("nvchad.configs.lspconfig").defaults()
 local lspconfig = require "lspconfig"
 
 -- example
-local servers = { "html", "cssls", "tsserver", "tailwindcss", "eslint", "dartls" }
+local servers = { "html", "cssls", "tailwindcss", "eslint", "dartls", "svelte" }
 local nvlsp = require "nvchad.configs.lspconfig"
 
 for _, lsp in ipairs(servers) do
@@ -37,8 +37,15 @@ lspconfig.dartls.setup {
     },
   },
 }
+lspconfig.tsserver.setup {
+  on_attach = nvlsp.on_attach,
+  on_init = nvlsp.on_init,
+  capabilities = nvlsp.capabilities,
+  filetypes = { "javascript", "typescript", "typescriptreact", "javascriptreact", "mdx" },
+}
 -- configuring single server, example: typescript
 -- lspconfig.tsserver.setup {
+--   filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact", "mdx" },
 --   on_attach = nvlsp.on_attach,
 --   on_init = nvlsp.on_init,
 --   capabilities = nvlsp.capabilities,

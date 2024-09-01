@@ -1,3 +1,8 @@
+vim.filetype.add {
+  extension = {
+    mdx = "mdx",
+  },
+}
 return {
   {
     "stevearc/conform.nvim",
@@ -20,11 +25,8 @@ return {
   },
   {
     "nvim-treesitter/nvim-treesitter",
-    build = ":TSUpdate",
-    config = function()
-      local configs = require "nvim-treesitter.configs"
-
-      configs.setup {
+    opts = function()
+      return {
         ensure_installed = {
           "lua",
           "html",
@@ -33,11 +35,42 @@ return {
           "typescript",
           "tsx",
           "json",
+        "svelte"
+                },
+        highlight = {
+          enable = true,
         },
-        sync_install = false,
-        highlight = { enable = true },
-        indent = { enable = true },
+        indent = {
+          enable = true,
+        },
         auto_install = true,
+      }
+    end,
+    config = function(_, opts)
+      dofile(vim.g.base46_cache .. "syntax")
+      require("nvim-treesitter.configs").setup(opts)
+      -- Use the markdown parser for mdx files
+      vim.treesitter.language.register("markdown", "mdx")
+
+      -- Extend Treesitter to handle import/export in MDX files as TypeScript
+      require("nvim-treesitter").define_modules {
+        mdx_ext = {
+          extend = function(lang, _)
+            if lang == "markdown" then
+              return {
+                injections = {
+                  {
+                    language = "typescript",
+                    content = {
+                      "^%s*import",
+                      "^%s*export",
+                    },
+                  },
+                },
+              }
+            end
+          end,
+        },
       }
     end,
   },
